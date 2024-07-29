@@ -72,3 +72,15 @@ const goPrevPage = () => {
 // Event Listener
 nextBtn.addEventListener('click', goNextPage)
 prevBtn.addEventListener('click', goPrevPage)
+
+document.addEventListener('keydown', (e) => {
+    const key = e.key
+    switch (key) {
+        case 'ArrowLeft':  
+            goPrevPage()
+            break
+        case 'ArrowRight':
+            goNextPage()
+            break
+    }
+})
