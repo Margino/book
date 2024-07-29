@@ -19,7 +19,9 @@ const goNextPage = () => {
     switch(currentLocation) {
         case 1:
             paper1.classList.add('flipped')
-            paper1.style.zIndex = 1
+            setTimeout(() => {
+                paper1.style.zIndex = 1
+            }, 300);
             main.classList.remove('start')
             main.classList.add('active')
             break
@@ -55,7 +57,9 @@ const goPrevPage = () => {
             break
         case 4:
             paper3.classList.remove('flipped')
-            paper3.style.zIndex = 1
+            setTimeout(()=> {
+                paper3.style.zIndex = 1
+            }, 300)
             main.classList.remove('end')
             main.classList.add('active')
             break
