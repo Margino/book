@@ -4,84 +4,73 @@ const nextBtn = document.querySelector('#next-btn')
 const book = document.querySelector('#book')
 const main = document.querySelector('main')
 
-const paper1 = document.querySelector('#p1')
-const paper2 = document.querySelector('#p2')
-const paper3 = document.querySelector('#p3')
+const pages = document.querySelectorAll('.page')
+const pagesCount = pages.length
+
 
 // Business Logic
-let currentLocation = 1
-let numOfPage = 3
-let maxLocation = numOfPage + 1
- 
-const goNextPage = () => {
-    if (currentLocation >= maxLocation) return
 
-    switch(currentLocation) {
-        case 1:
-            paper1.classList.add('flipped')
-            setTimeout(() => {
-                paper1.style.zIndex = 1
-            }, 300);
-            break
-        case 2:
-            paper2.classList.add('flipped')
-            setTimeout(() => {
-                paper2.style.zIndex = 2
-            }, 300);
-            break
-        case 3:
-            paper3.classList.add('flipped')
-            setTimeout(() => {
-                paper3.style.zIndex = 3
-            }, 300);
-            
-            break
-        default:
-            throw new Error('unknown state')
+// создаем индекс страниц
+pages.forEach( (item, index) => item.setAttribute('data-page', index))
+
+// выставляем текущею страницу
+pages[0].setAttribute('id', 'currentPage')
+
+const checkFirsLastPage = () => {
+    // получаем текущую страницу
+    let currentPageNum = document.querySelector('#currentPage').getAttribute('data-page')
+
+    // проверяем, что не первая 
+    if (currentPageNum <= 0) {
+        prevBtn.disabled = true
+        return 'firstPage'
     }
-    currentLocation++
+
+    // проверяем, что не последняя 
+    if (currentPageNum >= pagesCount - 1) {
+        nextBtn.disabled = true
+        return 'lastPage'
+    }
+
+    // разблокируем кнопки навигации
+    prevBtn.disabled = false
+    nextBtn.disabled = false
 }
 
-const goPrevPage = () => {
-    if (currentLocation <= 1) return
+// переход на страницу
 
-    switch(currentLocation) {
-        case 2:
-            paper1.classList.remove('flipped')
-            setTimeout(()=> {
-                paper1.style.zIndex = 3
-            }, 300)
-            break
-        case 3:
-            paper2.classList.remove('flipped')
-            setTimeout(()=> {
-                paper2.style.zIndex = 2
-            }, 300)
-            break
-        case 4:
-            paper3.classList.remove('flipped')
-            setTimeout(()=> {
-                paper3.style.zIndex = 1
-            }, 300)
-            break
-        default:
-            throw new Error('unknown state')
-    }
-    currentLocation--
+const getToPage = (index) => {
+    // получаем текущую страницу
+    let currentPage = document.querySelector('#currentPage')
+
+    // получаем индекс текущей страницы
+    let currentPageNum = currentPage.getAttribute('data-page')
+    // console.log('currentPageNum: ', currentPageNum)
+
+    // индекс новой текущей страницы
+    let newCurrentPage = document.querySelector(`[data-page="${+currentPageNum + index}"]`)
+
+    // меняем текущую страницу
+    currentPage.removeAttribute('id')
+    newCurrentPage.setAttribute('id', 'currentPage')
+
+    // проверка на первую/последнюю страницу
+    checkFirsLastPage()
+}
+
+const getToNextPage = () => {
+    getToPage(1)
+}
+
+const getToPrevPage = () => {
+    getToPage(-1)
 }
 
 // Event Listener
-nextBtn.addEventListener('click', goNextPage)
-prevBtn.addEventListener('click', goPrevPage)
+nextBtn.addEventListener('click', getToNextPage)
+prevBtn.addEventListener('click', getToPrevPage)
 
-document.addEventListener('keydown', (e) => {
-    const key = e.key
-    switch (key) {
-        case 'ArrowLeft':  
-            goPrevPage()
-            break
-        case 'ArrowRight':
-            goNextPage()
-            break
-    }
-})
+// Запуск
+
+// скрываем кнопку назад
+checkFirsLastPage()
