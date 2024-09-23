@@ -39,20 +39,20 @@ main {
     background-color: skyblue;
 }
 
-main.active .book{
+/* main.active .book{
     transform: translateX(50%);
     transition: transform 1s;
-}
+} */
 
-main.start .book{
+/* main.start .book{
     transform: translateX(0);
     transition: transform 1s;
-}
+} */
 
-main.end .book{
+/* main.end .book{
     transform: translateX(100%);
     transition: transform 1s;
-}
+} */
 
 .book {
     width: 100%;
@@ -116,7 +116,7 @@ main.end .book{
 
 .flipped .front,
 .flipped .back {
-    transform: rotateY(-180deg);
+    transform: rotateY(-360deg);
 }
 
 #p1 {

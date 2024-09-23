@@ -22,18 +22,19 @@ const goNextPage = () => {
             setTimeout(() => {
                 paper1.style.zIndex = 1
             }, 300);
-            main.classList.remove('start')
-            main.classList.add('active')
             break
         case 2:
             paper2.classList.add('flipped')
-            paper2.style.zIndex = 2
+            setTimeout(() => {
+                paper2.style.zIndex = 2
+            }, 300);
             break
         case 3:
             paper3.classList.add('flipped')
-            paper3.style.zIndex = 3
-            main.classList.remove('active')
-            main.classList.add('end')
+            setTimeout(() => {
+                paper3.style.zIndex = 3
+            }, 300);
+            
             break
         default:
             throw new Error('unknown state')
@@ -47,21 +48,21 @@ const goPrevPage = () => {
     switch(currentLocation) {
         case 2:
             paper1.classList.remove('flipped')
-            paper1.style.zIndex = 3
-            main.classList.remove('active')
-            main.classList.add('start')
+            setTimeout(()=> {
+                paper1.style.zIndex = 3
+            }, 300)
             break
         case 3:
             paper2.classList.remove('flipped')
-            paper2.style.zIndex = 2
+            setTimeout(()=> {
+                paper2.style.zIndex = 2
+            }, 300)
             break
         case 4:
             paper3.classList.remove('flipped')
             setTimeout(()=> {
                 paper3.style.zIndex = 1
             }, 300)
-            main.classList.remove('end')
-            main.classList.add('active')
             break
         default:
             throw new Error('unknown state')
